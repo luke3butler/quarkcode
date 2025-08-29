@@ -1,42 +1,51 @@
 # quarkcode
 
-Minimal CLI agent with a TUI.
+Minimal CLI agent with a pretty TUI, 855 lines of code
 
 ![Screenshot](assets/screenshot.png)
 
-These CLI agents are a dime a dozen, and this wasn't built with the intent to replace them. It's functional, but not polished.
+## Overview
 
-Initially inspired by [mini-swe-agent](https://github.com/SWE-agent/mini-swe-agent), the goal was to build a powerful CLI + TUI agent in ~1k lines of code or less (mini-swe-agent is around ~4k in total). Using JS instead of TS would have resulted in even less code, but oh well.
+This probably won't replace your current agent, but it's a fun experiment in building a minimal agent with a TUI. It's functional and somewhat polished, but not fully featured.
 
-Claude Code helped write the non-interactive version, then I switched to quarkcode to build the TUI and other features.
+Inspired by [mini-swe-agent](https://github.com/SWE-agent/mini-swe-agent) and Claude Code, the goal was to build an equivalent agent in under 1k lines (mini-swe-agent is ~1.7k lines for the CLI + TUI).
+
+Fun fact: Claude Code helped write the initial non-interactive version, then I switched to quarkcode itself to build the TUI and polish the features.
 
 Why "quark"? Among the most fundamental particles we know. And just a unique name.
 
 ## Details
 
-- 858 lines of code (as of this README commit)
-  - For all code, types, prompts, and configuration (`wc -l src/**/* 2>/dev/null | tail -1`)
-- Interactive TUI (similar to Claude Code)
-  - One-shot (will not remember previous messages)
-  - Asks for confirmation before executing commands
-  - shift+tab to toggle auto-accept mode (yolo mode)
-- A single tool: Bash
-- _Potentially_ resolves ~67% of GitHub issues in the [SWE-bench verified benchmark](https://www.swebench.com/) (will not be spending $ to re-verify this)
-- Supports models from Anthropic and OpenAI, but any model supported by the AI SDK can be added easily
-- Written in TypeScript, targeting the Bun runtime
+- Interactive TUI similar to Claude Code
+- One-shot sessions (will not remember previous prompts within your session)
+- Single tool: Bash execution
+- Auto-accept mode (Shift+Tab)
+- Potentially resolves ~67% of GitHub issues in SWE-bench verified (unverified claim)
+- Supports Anthropic and OpenAI models
+- Written in TypeScript
 - Minimal dependencies
-  - AI SDK (anthropic, openai)
+  - AI SDK
   - Ink (TUI)
   - yargs (CLI)
 
 ## Quickstart
 
-⚠️ **Warning**: This agent has direct access to bash. Be careful with auto-accept mode.
+⚠️ **Warning**: Be careful with auto-accept mode. This tools gives an LLM shell access.
 
 ```bash
 # Set ANTHROPIC_API_KEY or OPENAI_API_KEY in your environment
 export ANTHROPIC_API_KEY="your_key_here"
-# Via bunx
+
+# Install globally
+npm install -g quarkcode@latest
+quark                    # Interactive mode
+quark -t "Fix the bug"   # Direct task
+
+# Or run directly without installing
+npx -y quarkcode@latest  # Interactive mode
+npx -y quarkcode@latest -t "Fix the bug in main.py"
+
+# Or via bunx
 bunx quarkcode  # Interactive mode
 bunx quarkcode -t "Fix the bug in main.py"
 ```
@@ -44,7 +53,7 @@ bunx quarkcode -t "Fix the bug in main.py"
 ## TUI Shortcuts
 
 - `Ctrl+C` - Exit
-- `Shift+Tab` - Toggle auto-accept mode
+- `Shift+Tab` - Toggle auto-accept mode (yolo mode with no safeguards)
 - **Command confirmation**: `Y`/`Enter` = approve, `N`/`Escape` = reject
 
 ## CLI Flags
@@ -55,6 +64,13 @@ bunx quarkcode -t "Fix the bug in main.py"
 - `-s, --step-limit` - Max steps
 - `--tui` - Launch TUI
 - `-h, --help` - Show help
+
+## Command Aliases
+
+Both `quark` and `quarkcode` work identically:
+
+- `quark -t "task"` (short)
+- `quarkcode -t "task"` (descriptive)
 
 ## Models
 

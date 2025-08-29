@@ -1,6 +1,6 @@
 {
   "name": "quarkcode",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Minimal AI agent for development tasks",
   "keywords": [
     "ai",
@@ -19,14 +19,15 @@
   "module": "src/index.ts",
   "type": "module",
   "bin": {
-    "quark": "./dist/index.js"
+    "quark": "./dist/index.js",
+    "quarkcode": "./dist/index.js"
   },
   "files": [
     "dist/"
   ],
   "scripts": {
     "dev": "bun --watch src/index.ts",
-    "build": "bun build src/index.ts --outdir dist --target bun",
+    "build": "bun build src/index.ts --outdir dist --target node --minify",
     "prepublishOnly": "bun run build",
     "docker:build": "docker build -t quarkcode .",
     "docker:help": "docker run --rm --env-file .env quarkcode --help",
