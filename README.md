@@ -2,6 +2,8 @@
 
 Minimal CLI agent with a TUI.
 
+![Screenshot](assets/screenshot.png)
+
 These CLI agents are a dime a dozen, and this wasn't built with the intent to replace them. It's functional, but not polished.
 
 Initially inspired by [mini-swe-agent](https://github.com/SWE-agent/mini-swe-agent), the goal was to build a powerful agent under ~1000 lines of code. Using JS instead of TS would have resulted in even less code, but oh well.
