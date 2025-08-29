@@ -1,0 +1,58 @@
+{
+  "name": "quarkcode",
+  "version": "1.0.0",
+  "description": "Minimal AI agent for development tasks",
+  "keywords": [
+    "ai",
+    "agent",
+    "development",
+    "automation",
+    "cli",
+    "tui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luke3butler/quarkcode.git"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "module": "src/index.ts",
+  "type": "module",
+  "bin": {
+    "quark": "./dist/index.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "prepublishOnly": "bun run build",
+    "docker:build": "docker build -t quarkcode .",
+    "docker:help": "docker run --rm --env-file .env quarkcode --help",
+    "docker:run": "docker run --rm -it -v ./workspace:/workspace --env-file .env -w /workspace quarkcode",
+    "agent": "docker run --rm -it -v ./workspace:/workspace --env-file .env -w /workspace quarkcode",
+    "agent:b": "docker build --no-cache -t quarkcode . && docker run --rm -it -v ./workspace:/workspace --env-file .env -w /workspace quarkcode",
+    "agent:debug": "docker run --rm -v ./workspace:/workspace --env-file .env -w /workspace quarkcode",
+    "agent:debug:b": "docker build --no-cache -t quarkcode . && docker run --rm -v ./workspace:/workspace --env-file .env -w /workspace quarkcode"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/yargs": "^17.0.33",
+    "react-devtools-core": "^6.1.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.8",
+    "@ai-sdk/openai": "^2.0.22",
+    "ai": "^5.0.26",
+    "ink": "^6.2.2",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^6.0.0",
+    "react": "^19.1.1",
+    "yargs": "^18.0.0",
+    "zod": "^4.1.4"
+  }
+}
